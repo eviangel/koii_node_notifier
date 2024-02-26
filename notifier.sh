@@ -12,12 +12,12 @@ echo "Containers found: $CONTAINER_RUNNING"
 # If the container is not running, then send the message
 if [ ! -z "$CONTAINER_RUNNING" ]; then
     # Use Python to read the Webhook URL from the JSON file
-    WEBHOOK_URL=$(python3 -c "import json; print(json.load(open('webhook_config.json'))['webhook_url'])")
-    MESSAGE="The Docker container $CONTAINER_NAME is not running."
+    WEBHOOK_URL=$(python3 -c "import json; print(json.load(open('notifier_config.json'))['webhook_url'])")
+    MESSAGE="The Docker container for koii node is not running! please check your VPS and do: docker compose up."
 
     # Check if the WEBHOOK_URL is empty
     if [ -z "$WEBHOOK_URL" ]; then
-        echo "Webhook URL is not defined. Please check your webhook_config.json file."
+        echo "Webhook URL is not defined. Please check your notifier_config.json file."
         exit 1
     fi
 
