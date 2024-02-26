@@ -3,6 +3,9 @@
 # Define the docker image name
 CONTAINER_NAME="task_node"
 
+# Go to the script directory
+cd "$(dirname "$0")"
+
 # Check if the container is running
 CONTAINER_RUNNING=$(docker ps --filter "name=^/${CONTAINER_NAME}$" --format "{{.Names}}")
 
@@ -13,7 +16,7 @@ echo "Containers found: $CONTAINER_RUNNING"
 if [ -z "$CONTAINER_RUNNING" ]; then
     # Use Python to read the Webhook URL from the JSON file
     WEBHOOK_URL=$(python3 -c "import json; print(json.load(open('notifier_config.json'))['webhook_url'])")
-    MESSAGE="Your koii node Docker container isn't running! Please check your VPS. To start it, go to the VPS-task directory and run: docker compose up."
+    MESSAGE="Your koii node Docker container isn't running! Please check your VPS. To start it, go to the VPS-task directory and run: docker compose up -d."
 
     # Check if the WEBHOOK_URL is empty
     if [ -z "$WEBHOOK_URL" ]; then
